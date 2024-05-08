@@ -1,0 +1,770 @@
+{
+	"info": {
+		"_postman_id": "1ac5efe5-cd55-4adf-b09e-7aefa41744c9",
+		"name": "First Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34332908"
+	},
+	"item": [
+		{
+			"name": "Register API Client",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"clientName\": \"Postman on Valentin's computer\",\r\n   \"clientEmail\": \"vale1ntin@example.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Baseline}}/api-clients",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"api-clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const number = [4, 5,,6,7,8,9]\r",
+							"let foundItem = number.find((item) => item === 5);\r",
+							"console.log(foundItem)\r",
+							"if(foundItem){\r",
+							"    console.log('found it')\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"//how to find a person in the array\r",
+							"const personFound = person.find((person) => person.name === 'Lucy')\r",
+							"console.log(personFound)\r",
+							"if(personFound) {\r",
+							"    console.log(personFound.email)\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Baseline}}/status",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Baseline}}/products",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get single product",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Baseline}}/products/:productId",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"products",
+						":productId"
+					],
+					"variable": [
+						{
+							"key": "productId",
+							"value": "4643"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0. Create a cart",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.clear()"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response had valid CartId' , () => {\r",
+							"    const response = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(response).to.be.an('object');\r",
+							"    pm.expect(response).to.haveOwnProperty('cartID');\r",
+							"    pm.expect(response.cartId).to.be.a('string');\r",
+							"    pm.collectionVariables.set('cartId', response.cartId);\r",
+							"    \r",
+							"\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken\n}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cartId\": \"ZFe4yhG5qNhmuNyrbLWa4\",\r\n    \"customerName\": \"John Doe\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Baseline}}/carts",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"carts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cart",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Baseline}}/carts/:cartId",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"carts",
+						":cartId"
+					],
+					"variable": [
+						{
+							"key": "cartId",
+							"value": "{{cartId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cart Items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Baseline}}/carts/:cartId/items",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"carts",
+						":cartId",
+						"items"
+					],
+					"variable": [
+						{
+							"key": "cartId",
+							"value": "{{cartId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add an item to cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the response body as JSON and extract the itemId property\r",
+							"\r",
+							"pm.test('Item was created'), () =>{\r",
+							"    const response = pm.response.json();\r",
+							"    console.log(response.itemId)\r",
+							"pm.expect(response).to.be.an('object');\r",
+							"pm.expect(response.created).to.be.true;\r",
+							"pm.expec(response.itemId).to.be.a('number');\r",
+							"// Set the value of itemId as a collection\r",
+							"pm.collectionVariables.set('lastAddedItemId', response.itemId);\r",
+							"\r",
+							"\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productId\":4646\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Baseline}}/carts/:cartId/items",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"carts",
+						":cartId",
+						"items"
+					],
+					"variable": [
+						{
+							"key": "cartId",
+							"value": "{{cartId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Quantity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function getRandomNumber(maxValue) {\r",
+							"    return Math.floor(Math.random() * maxValue)\r",
+							"}\r",
+							"\r",
+							"\r",
+							"pm.collectionVariables.set('randomQuantity', getRandomNumber(14))"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"quantity\": {{randomQuantity}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Baseline}}/carts/:cartId/items/:itemId\n",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"carts",
+						":cartId",
+						"items",
+						":itemId\n"
+					],
+					"variable": [
+						{
+							"key": "cartId",
+							"value": "{{cartId}}"
+						},
+						{
+							"key": "itemId\n",
+							"value": "{{lastAddedItemId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Replace product in the cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the response body as JSON and extract the itemId property\r",
+							"const itemId = pm.response.json().itemId;\r",
+							"\r",
+							"// Set the value of itemId as a collection variable\r",
+							"pm.collectionVariables.set(\"lastAddedItemId\", itemId);\r",
+							"\r",
+							"// Log the value of itemId to the Postman console\r",
+							"console.log(\"Last Added Item ID:\", itemId);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productId\":4643,\r\n   \"quantity\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Baseline}}/carts/:cartId/items/:itemId\n",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"carts",
+						":cartId",
+						"items",
+						":itemId\n"
+					],
+					"variable": [
+						{
+							"key": "cartId",
+							"value": "{{cartId}}"
+						},
+						{
+							"key": "itemId\n",
+							"value": "{{lastAddedItemId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Replace product in the cart Copy",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productId\":4643,\r\n   \"quantity\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Baseline}}/carts/:cartId/items/:itemId\n",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"carts",
+						":cartId",
+						"items",
+						":itemId\n"
+					],
+					"variable": [
+						{
+							"key": "cartId",
+							"value": "{{cartId}}"
+						},
+						{
+							"key": "itemId\n",
+							"value": "974167558"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create an order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken\n}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cartId\": \"Qcy59MElGGtJngjqLIjww\",\r\n    \"customerName\": \"{{$randomFullName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Baseline}}/orders",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken\n}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Baseline}}/orders/:orderId",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"orders",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "2ZvEZYqFdbxbSXwH_8Fgn"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all orders Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken\n}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Baseline}}/orders/:orderId",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"orders",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "2ZvEZYqFdbxbSXwH_8Fgn"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Single Orders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", () => {\r",
+							"    pm.response.to.have.status(404);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Error message containes teh deleted orderd id\", () => {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response).to.haveOwnProperty('error')\r",
+							"    \r",
+							"    pm.collectionVariables.get(\"orderId\");\r",
+							"    pm.expect('response.error').to.contain('orderId')\r",
+							"    \r",
+							"    console.log(\"Order ID:\", orderId);\r",
+							"\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken\n}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Baseline}}/orders/:orderId",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"orders",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "{{orderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken\n}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"customerName\": \"Joe Doe\",\r\n\"comment\":\"I did it \"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Baseline}}/orders/:orderId",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"orders",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "{{orderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Order",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productId\":4643,\r\n   \"quantity\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Baseline}}/carts/:cartId/items/:itemId\n",
+					"host": [
+						"{{Baseline}}"
+					],
+					"path": [
+						"carts",
+						":cartId",
+						"items",
+						":itemId\n"
+					],
+					"variable": [
+						{
+							"key": "cartId",
+							"value": "{{cartId}}"
+						},
+						{
+							"key": "itemId\n",
+							"value": "974167558"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Baseline",
+			"value": "https://simple-grocery-store-api.glitch.me"
+		},
+		{
+			"key": "accessToken\n",
+			"value": "your action token\n",
+			"type": "string"
+		},
+		{
+			"key": "cartId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "lastAddedItemId",
+			"value": "WPR6iCGbpPboHkW_CYHd9"
+		},
+		{
+			"key": "orderId",
+			"value": ""
+		},
+		{
+			"key": "productId",
+			"value": ""
+		},
+		{
+			"key": "randomQuantity",
+			"value": ""
+		}
+	]
+}
